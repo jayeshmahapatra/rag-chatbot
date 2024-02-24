@@ -1,0 +1,88 @@
+import logging
+import os
+import re
+
+from langchain_community.document_loaders import WebBaseLoader
+from langchain.indexes import SQLRecordManager, index
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+import chromadb
+from langchain_community.vectorstores import Chroma
+from langchain_core.embeddings import Embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
+from sitemap_crawler import get_urls_from_sitemap
+from constants import EMBEDDING_MODEL_NAME, CHROMA_DOCS_INDEX_NAME,\
+					CHROMA_URL, RECORD_MANAGER_DB_URL
+
+# Logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+def get_embeddings_model() -> Embeddings:
+	return HuggingFaceEmbeddings(model_name= EMBEDDING_MODEL_NAME)
+
+def load_blog_docs():
+	urls = get_urls_from_sitemap("https://jayeshmahapatra.github.io/sitemap.xml")
+	loader = WebBaseLoader(urls)
+	docs = loader.load()
+	return docs
+
+def ingest_docs():
+
+	text_splitter = RecursiveCharacterTextSplitter(chunk_size=256, chunk_overlap=25)
+	embedding = get_embeddings_model()
+
+	# Create Chroma client and vectorstore
+	chroma_client = chromadb.HttpClient(host='localhost', port=8000)
+
+	# Create Chroma schema if it does not exist
+	chroma_client.get_or_create_collection(CHROMA_DOCS_INDEX_NAME)
+
+	langchain_chroma = Chroma(
+    client=chroma_client,
+    collection_name= CHROMA_DOCS_INDEX_NAME,
+	embedding_function=embedding,
+	)
+	
+
+	namespace = f"CHROMA/{CHROMA_DOCS_INDEX_NAME}"
+	record_manager = SQLRecordManager(
+		namespace, db_url=RECORD_MANAGER_DB_URL
+	)
+
+	record_manager.create_schema()
+
+	docs_from_blog = load_blog_docs()
+	logger.info(f"Loaded {len(docs_from_blog)} docs from blog")
+
+	docs_transformed = text_splitter.split_documents(
+		docs_from_blog
+	)
+	docs_transformed = [doc for doc in docs_transformed if len(doc.page_content) > 10]
+
+	for doc in docs_transformed:
+		if "source" not in doc.metadata:
+			doc.metadata["source"] = ""
+		if "title" not in doc.metadata:
+			doc.metadata["title"] = ""
+
+	indexing_stats = index(
+		docs_transformed,
+		record_manager,
+		langchain_chroma,
+		cleanup="full",
+		source_id_key="source",
+		force_update=(os.environ.get("FORCE_UPDATE") or "false").lower() == "true",
+	)
+
+	logger.info(f"Indexing stats: {indexing_stats}")
+	num_vecs = langchain_chroma._collection.count()
+	logger.info(
+		f"LangChain now has this many vectors: {num_vecs}",
+	)
+
+
+if __name__ == "__main__":
+	ingest_docs()
