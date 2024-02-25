@@ -9,11 +9,15 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import chromadb
 from langchain_community.vectorstores import Chroma
 from langchain_core.embeddings import Embeddings
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_together import TogetherEmbeddings
+from dotenv import load_dotenv
+#from langchain_community.embeddings import HuggingFaceEmbeddings
 
 from sitemap_crawler import get_urls_from_sitemap
 from constants import EMBEDDING_MODEL_NAME, CHROMA_DOCS_INDEX_NAME,\
 					CHROMA_URL, RECORD_MANAGER_DB_URL
+
+load_dotenv('keys.env')
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_embeddings_model() -> Embeddings:
-	return HuggingFaceEmbeddings(model_name= EMBEDDING_MODEL_NAME)
+	return TogetherEmbeddings(model="togethercomputer/m2-bert-80M-8k-retrieval")
 
 def load_blog_docs():
 	urls = get_urls_from_sitemap("https://jayeshmahapatra.github.io/sitemap.xml")
@@ -31,7 +35,7 @@ def load_blog_docs():
 
 def ingest_docs():
 
-	text_splitter = RecursiveCharacterTextSplitter(chunk_size=256, chunk_overlap=25)
+	text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=200)
 	embedding = get_embeddings_model()
 
 	# Create Chroma client and vectorstore
