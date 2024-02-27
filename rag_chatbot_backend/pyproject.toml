@@ -1,29 +1,27 @@
 [tool.poetry]
-name = "rag-chatbot"
+name = "rag_chatbot_backend"
 version = "0.1.0"
 description = "chatbot for blog"
 authors = ["Jayesh <jayeshmahapatra@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 langchain = "^0.1.5"
 langchain-community = "^0.0.19"
+langchain-openai = "^0.0.3"
+langchain-together = "0.0.2.post1"
 langserve = {extras = ["server"], version = "^0.0.39"}
 fastapi = "^0.103.1"
-pydantic = "1.10"
+pydantic = "2.5.0"
 uvicorn = "^0.23.2"
 beautifulsoup4 = "^4.12.2"
-weaviate-client = "^3.23.2"
-psycopg2 = "^2.9.7"
+psycopg2-binary = "^2.9.7"
 lxml = "^4.9.3"
 pillow = "^10.2.0"
 tiktoken = "^0.5.2"
 chromadb = "0.4.22"
-transformers = "4.37.2"
-sentence-transformers = "2.3.1"
-langchain-together = "0.0.2.post1"
-langfuse = '2.16.2'
+langfuse = {version = "2.16.2", python = ">=3.11,<3.13"}
 
 
 [tool.poetry.group.lint.dependencies]

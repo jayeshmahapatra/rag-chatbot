@@ -4,6 +4,7 @@ from operator import itemgetter
 from typing import Dict, List, Optional, Sequence
 
 import chromadb
+from chromadb.config import Settings as ChromaSettings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from langchain_together import Together
@@ -27,11 +28,15 @@ from langchain_core.runnables import (
     RunnableMap,
 )
 
+import configparser
 from dotenv import load_dotenv
+
+config = configparser.ConfigParser()
+config.read('service.config')
 
 load_dotenv('keys.env')
 
-from constants import CHROMA_DOCS_INDEX_NAME
+
 from ingestion_pipeline import get_embeddings_model
 
 # Logging
@@ -109,11 +114,17 @@ class ChatRequest(BaseModel):
 
 def get_retriever() -> BaseRetriever:
     
-    chroma_client = chromadb.HttpClient(host='localhost', port=8000)
+    chroma_client = chromadb.HttpClient(
+    host=config.get('Chroma', 'host'), 
+    port=config.get('Chroma', 'port'),
+    settings = ChromaSettings(
+    chroma_client_auth_provider="chromadb.auth.token.TokenAuthClientProvider",
+    chroma_client_auth_credentials=os.environ.get("CHROMA_API_KEY", "not_provided")
+    ))
     
     langchain_chroma = Chroma(
     client=chroma_client,
-    collection_name= CHROMA_DOCS_INDEX_NAME,
+    collection_name= config.get('Chroma', 'collection_name'),
 	embedding_function= get_embeddings_model(),
 	)
     return langchain_chroma.as_retriever(search_kwargs=dict(k=6))
@@ -204,9 +215,9 @@ def create_chain(
     )
 
 llm = ChatOpenAI(
-    model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-    temperature=0,
-    max_tokens=16384,
+    model=config.get('Generation', 'model_name'),
+    temperature=config.getint('Generation', 'temperature'),
+    max_tokens=config.getint('Generation', 'max_tokens'),
     streaming=True,
     openai_api_key=os.environ.get("TOGETHER_API_KEY", "not_provided"),
     openai_api_base = "https://api.together.xyz/v1"

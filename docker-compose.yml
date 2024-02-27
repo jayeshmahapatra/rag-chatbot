@@ -1,0 +1,24 @@
+version: '3'
+services:
+  rag_backend:
+    env_file:
+      - rag_chatbot_backend/keys.env
+    build:
+      context: ./rag_chatbot_backend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - Data:/Data
+  chroma:
+    image: chromadb/chroma
+    ports:
+      - 8000:8000
+    env_file:
+      - chroma/chroma.env
+    volumes:
+      - Data:/chroma/chroma
+
+volumes:
+  Data:
+    driver: local

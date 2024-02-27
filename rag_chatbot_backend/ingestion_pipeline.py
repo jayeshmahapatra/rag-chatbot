@@ -7,16 +7,18 @@ from langchain.indexes import SQLRecordManager, index
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 import chromadb
+from chromadb.config import Settings as ChromaSettings
 from langchain_community.vectorstores import Chroma
 from langchain_core.embeddings import Embeddings
 from langchain_together import TogetherEmbeddings
 from dotenv import load_dotenv
-#from langchain_community.embeddings import HuggingFaceEmbeddings
 
 from sitemap_crawler import get_urls_from_sitemap
-from constants import EMBEDDING_MODEL_NAME, CHROMA_DOCS_INDEX_NAME,\
-					CHROMA_URL, RECORD_MANAGER_DB_URL
+import configparser
 
+config = configparser.ConfigParser()
+config.read('service.config')
+model_name = config.get('Embedding', 'model_name')
 load_dotenv('keys.env')
 
 # Logging
@@ -25,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_embeddings_model() -> Embeddings:
-	return TogetherEmbeddings(model="togethercomputer/m2-bert-80M-8k-retrieval")
+	return TogetherEmbeddings(model=model_name)
 
 def load_blog_docs():
 	urls = get_urls_from_sitemap("https://jayeshmahapatra.github.io/sitemap.xml")
@@ -34,26 +36,27 @@ def load_blog_docs():
 	return docs
 
 def ingest_docs():
-
-	text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=200)
+	chunk_size = config.getint('Embedding', 'chunk_size')
+	text_splitter = RecursiveCharacterTextSplitter(chunk_size= chunk_size, chunk_overlap=chunk_size//10)
 	embedding = get_embeddings_model()
 
 	# Create Chroma client and vectorstore
-	chroma_client = chromadb.HttpClient(host='localhost', port=8000)
+	chroma_client = chromadb.HttpClient(host=config.get('Chroma', 'host'), port=config.get('Chroma', 'port'))
 
 	# Create Chroma schema if it does not exist
-	chroma_client.get_or_create_collection(CHROMA_DOCS_INDEX_NAME)
+	chroma_collection_name = config.get('Chroma', 'collection_name')
+	chroma_client.get_or_create_collection(chroma_collection_name)
 
 	langchain_chroma = Chroma(
     client=chroma_client,
-    collection_name= CHROMA_DOCS_INDEX_NAME,
+    collection_name= chroma_collection_name,
 	embedding_function=embedding,
 	)
 	
 
-	namespace = f"CHROMA/{CHROMA_DOCS_INDEX_NAME}"
+	namespace = f"CHROMA/{chroma_collection_name}"
 	record_manager = SQLRecordManager(
-		namespace, db_url=RECORD_MANAGER_DB_URL
+		namespace, db_url=config.get('Record_Manager', 'db_url')
 	)
 
 	record_manager.create_schema()
