@@ -29,12 +29,9 @@ from langchain_core.runnables import (
 )
 
 import configparser
-from dotenv import load_dotenv
 
 config = configparser.ConfigParser()
-config.read('service.config')
-
-load_dotenv('keys.env')
+config.read('prod.config')
 
 
 from ingestion_pipeline import get_embeddings_model

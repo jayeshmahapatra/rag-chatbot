@@ -12,8 +12,6 @@ from dotenv import load_dotenv
 
 from chain import ChatRequest, answer_chain
 
-load_dotenv('keys.env')
-
 # Monitoring
 from langfuse.callback import CallbackHandler
 

@@ -18,6 +18,12 @@ services:
       - chroma/chroma.env
     volumes:
       - Data:/chroma/chroma
+  rag_frontend:
+    build:
+      context: ./rag_chatbot_frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
 
 volumes:
   Data:

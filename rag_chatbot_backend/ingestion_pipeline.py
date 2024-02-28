@@ -17,7 +17,7 @@ from sitemap_crawler import get_urls_from_sitemap
 import configparser
 
 config = configparser.ConfigParser()
-config.read('service.config')
+config.read('dev.config')
 model_name = config.get('Embedding', 'model_name')
 load_dotenv('keys.env')
 
@@ -41,7 +41,13 @@ def ingest_docs():
 	embedding = get_embeddings_model()
 
 	# Create Chroma client and vectorstore
-	chroma_client = chromadb.HttpClient(host=config.get('Chroma', 'host'), port=config.get('Chroma', 'port'))
+	chroma_client = chromadb.HttpClient(
+    host=config.get('Chroma', 'host'), 
+    port=config.get('Chroma', 'port'),
+    settings = ChromaSettings(
+    chroma_client_auth_provider="chromadb.auth.token.TokenAuthClientProvider",
+    chroma_client_auth_credentials=os.environ.get("CHROMA_API_KEY", "not_provided")
+    ))
 
 	# Create Chroma schema if it does not exist
 	chroma_collection_name = config.get('Chroma', 'collection_name')
