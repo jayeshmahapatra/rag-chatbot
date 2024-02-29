@@ -122,7 +122,7 @@ def get_retriever() -> BaseRetriever:
     langchain_chroma = Chroma(
     client=chroma_client,
     collection_name= config.get('Chroma', 'collection_name'),
-	embedding_function= get_embeddings_model(),
+	embedding_function= get_embeddings_model(config),
 	)
     return langchain_chroma.as_retriever(search_kwargs=dict(k=6))
 

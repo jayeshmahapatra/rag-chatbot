@@ -6,7 +6,7 @@ authors = ["Jayesh <jayeshmahapatra@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.12"
 langchain = "^0.1.5"
 langchain-community = "^0.0.19"
 langchain-openai = "^0.0.3"
@@ -22,6 +22,7 @@ pillow = "^10.2.0"
 tiktoken = "^0.5.2"
 chromadb = "0.4.22"
 langfuse = {version = "2.16.2", python = ">=3.11,<3.13"}
+unstructured = "0.12.5"
 
 
 [tool.poetry.group.lint.dependencies]
