@@ -9,6 +9,8 @@ services:
     volumes:
       - Data:/Data
     restart: unless-stopped
+    networks:
+      - caddy-vps
   chroma:
     image: chromadb/chroma
     env_file:
@@ -16,6 +18,8 @@ services:
     volumes:
       - Data:/chroma/chroma
     restart: unless-stopped
+    networks:
+      - caddy-vps  
   rag-frontend:
     build:
       context: ./rag_chatbot_frontend
@@ -23,23 +27,13 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
-  caddy:
-    image: caddy:2.7.6-alpine
-    restart: unless-stopped
-    ports:
-      - 80:80
-      - 443:443
-      - 443:443/udp
-    volumes:
-      - $PWD/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+    networks:
+      - caddy-vps
 
+networks:
+  caddy-vps:
+    external: true
 
 volumes:
   Data:
-    driver: local
-  caddy_data:
-    driver: local
-  caddy_config:
     driver: local
