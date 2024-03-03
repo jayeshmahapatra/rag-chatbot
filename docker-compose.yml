@@ -10,6 +10,7 @@ services:
       - 8080:8080
     volumes:
       - Data:/Data
+    restart: unless-stopped
   chroma:
     image: chromadb/chroma
     ports:
@@ -18,12 +19,14 @@ services:
       - chroma/chroma.env
     volumes:
       - Data:/chroma/chroma
+    restart: unless-stopped
   rag_frontend:
     build:
       context: ./rag_chatbot_frontend
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    restart: unless-stopped
 
 volumes:
   Data:
