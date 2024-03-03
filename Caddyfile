@@ -1,0 +1,9 @@
+chat.jayeshdev.com {
+    reverse_proxy rag_frontend:3000 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}
+
+chroma.jayeshdev.com {
+    reverse_proxy chroma:8000
+}

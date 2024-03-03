@@ -27,7 +27,23 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
+  caddy:
+    image: caddy:2.7.6-alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
 
 volumes:
   Data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
