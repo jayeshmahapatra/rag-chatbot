@@ -3,12 +3,11 @@ import os
 from typing import Optional, Union
 from uuid import UUID
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from langserve import add_routes
-from langsmith import Client
+from typing_extensions import Annotated
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
 from chain import ChatRequest, answer_chain
 
@@ -21,7 +20,22 @@ langfuse_handler = CallbackHandler(
     host = "https://cloud.langfuse.com"
     )
 
-app = FastAPI()
+# # Check environment has the secret token set, else raise an error
+# if "SECRET_TOKEN" not in os.environ:
+#     raise ValueError("SECRET_TOKEN environment variable not set")
+
+# async def verify_token(x_token: Annotated[str, Header()]) -> None:
+#     """Verify the token is valid."""
+#     # Replace this with your actual authentication logic
+#     if x_token != os.environ.get("SECRET_TOKEN"):
+#         raise HTTPException(status_code=400, detail="X-Token header invalid")
+
+app = FastAPI(
+    title="Jayesh Chatbot",
+    description="A RAG chatbot by Jayesh",
+    version="0.1.0",
+    # dependencies=[Depends(verify_token)],
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -52,40 +66,6 @@ class SendFeedbackBody(BaseModel):
     score: Union[float, int, bool, None] = None
     feedback_id: Optional[UUID] = None
     comment: Optional[str] = None
-
-
-# @app.post("/feedback")
-# async def send_feedback(body: SendFeedbackBody):
-#     client.create_feedback(
-#         body.run_id,
-#         body.key,
-#         score=body.score,
-#         comment=body.comment,
-#         feedback_id=body.feedback_id,
-#     )
-#     return {"result": "posted feedback successfully", "code": 200}
-
-
-# class UpdateFeedbackBody(BaseModel):
-#     feedback_id: UUID
-#     score: Union[float, int, bool, None] = None
-#     comment: Optional[str] = None
-
-
-# @app.patch("/feedback")
-# async def update_feedback(body: UpdateFeedbackBody):
-#     feedback_id = body.feedback_id
-#     if feedback_id is None:
-#         return {
-#             "result": "No feedback ID provided",
-#             "code": 400,
-#         }
-#     client.update_feedback(
-#         feedback_id,
-#         score=body.score,
-#         comment=body.comment,
-#     )
-#     return {"result": "patched feedback successfully", "code": 200}
 
 
 if __name__ == "__main__":

@@ -4,6 +4,10 @@ chat.jayeshdev.com {
     }
 }
 
+chat-backend.jayeshdev.com {
+    reverse_proxy rag_backend:8080
+}
+
 chroma.jayeshdev.com {
     reverse_proxy chroma:8000
 }
