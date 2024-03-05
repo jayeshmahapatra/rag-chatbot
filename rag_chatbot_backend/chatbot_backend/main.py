@@ -9,7 +9,8 @@ from langserve import add_routes
 from typing_extensions import Annotated
 from pydantic import BaseModel
 
-from chain import ChatRequest, answer_chain
+from chain.chain import answer_chain
+from schema import ChatRequest
 
 # Monitoring
 from langfuse.callback import CallbackHandler

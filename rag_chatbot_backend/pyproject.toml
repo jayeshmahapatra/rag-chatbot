@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "rag_chatbot_backend"
+name = "chatbot_backend"
 version = "0.1.0"
 description = "chatbot for blog"
 authors = ["Jayesh <jayeshmahapatra@gmail.com>"]

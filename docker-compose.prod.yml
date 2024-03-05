@@ -7,7 +7,7 @@ services:
       context: ./rag_chatbot_backend
       dockerfile: Dockerfile
     volumes:
-      - Data:/Data
+      - $PWD/Data/backend_data:/Data
     restart: unless-stopped
     networks:
       - caddy-vps
@@ -16,7 +16,7 @@ services:
     env_file:
       - chroma/chroma.env
     volumes:
-      - Data:/chroma/chroma
+      - $PWD/Data/chroma_data:/chroma/chroma
     restart: unless-stopped
     networks:
       - caddy-vps  

@@ -9,14 +9,16 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - Data:/Data
+      - $PWD/Data/backend_data:/Data
     restart: unless-stopped
   chroma:
     image: chromadb/chroma
     env_file:
       - chroma/chroma.env
+    ports:
+      - 8000:8000
     volumes:
-      - Data:/chroma/chroma
+      - $PWD/Data/chroma_data:/chroma/chroma
     restart: unless-stopped
   rag-frontend:
     build:
@@ -25,8 +27,3 @@ services:
     ports:
       - 3000:3000
     restart: unless-stopped
-
-
-volumes:
-  Data:
-    driver: local

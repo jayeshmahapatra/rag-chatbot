@@ -3,32 +3,25 @@ import argparse
 import os
 import re
 
-from langchain_community.document_loaders import UnstructuredURLLoader
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import UnstructuredURLLoader, WebBaseLoader, UnstructuredFileLoader
 from langchain.indexes import SQLRecordManager, index
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 from langchain_community.vectorstores import Chroma
-from langchain_core.embeddings import Embeddings
-from langchain_together import TogetherEmbeddings
 from dotenv import load_dotenv
 
-from sitemap_crawler import get_urls_from_sitemap
+from chatbot_backend.sitemap_crawler import get_urls_from_sitemap
+from chatbot_backend.chain.embedders import get_embeddings_model
 import configparser
 
 # Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-def get_embeddings_model(config) -> Embeddings:
-	model_name = config.get('Embedding', 'model_name')
-	return TogetherEmbeddings(model=model_name)
-
-def load_blog_docs():
-	urls = get_urls_from_sitemap("https://jayeshmahapatra.github.io/sitemap.xml")
+def load_blog_docs(sitemap_url: str):
+	urls = get_urls_from_sitemap(sitemap_url)
 	loader = UnstructuredURLLoader(urls)
 	docs = loader.load()
 
@@ -40,11 +33,29 @@ def load_blog_docs():
 
 	return docs
 
+def load_personal_docs(personal_docs_dir: str, private_data_url: str):
+
+	personal_files = os.listdir(personal_docs_dir)
+	private_data_source = WebBaseLoader(private_data_url).load()[0]
+	
+	personal_docs = []
+	for personal_file in personal_files:
+		personal_filepath = os.path.join(personal_docs_dir, personal_file)
+		loader = UnstructuredFileLoader(personal_filepath)
+		personal_doc = loader.load()[0]
+		personal_doc.metadata = private_data_source.metadata
+		personal_docs.append(personal_doc)
+
+	return personal_docs
+	 
+
+
 def ingest_docs(config: configparser.ConfigParser):
 	chunk_size = config.getint('Embedding', 'chunk_size')
 	chunk_overlap = config.getint('Embedding', 'chunk_overlap')
 	text_splitter = RecursiveCharacterTextSplitter(chunk_size= chunk_size, chunk_overlap=chunk_size//10)
-	embedding = get_embeddings_model(config)
+	model_name = config.get('Embedding', 'model_name')
+	embedding = get_embeddings_model(model_name)
 
 	# Create Chroma client and vectorstore
 	chroma_client = chromadb.HttpClient(
@@ -73,11 +84,18 @@ def ingest_docs(config: configparser.ConfigParser):
 
 	record_manager.create_schema()
 
-	docs_from_blog = load_blog_docs()
-	logger.info(f"Loaded {len(docs_from_blog)} docs from blog")
+	# Load docs from blog
+	sitemap_url = config.get('Ingestion', 'blog_sitemap_url')
+	blog_docs = load_blog_docs(sitemap_url)
+	logger.info(f"Loaded {len(blog_docs)} docs from blog")
+
+	# Load docs from personal files
+	personal_docs_dir = config.get('Ingestion', 'personal_docs_dir')
+	private_data_url = config.get('Ingestion', 'private_data_url')
+	personal_docs = load_personal_docs(personal_docs_dir, private_data_url)
 
 	docs_transformed = text_splitter.split_documents(
-		docs_from_blog
+		blog_docs + personal_docs
 	)
 	docs_transformed = [doc for doc in docs_transformed if len(doc.page_content) > 10]
 
@@ -121,6 +139,7 @@ if __name__ == "__main__":
 	load_dotenv('keys.env')
 
 	config = configparser.ConfigParser()
-	config.read(config_file)
+	config_file_path = os.path.join(os.path.dirname(__file__), 'configs', config_file)
+	config.read(config_file_path)
 
 	ingest_docs(config)
