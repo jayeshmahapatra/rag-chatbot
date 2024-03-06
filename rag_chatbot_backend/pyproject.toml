@@ -23,6 +23,7 @@ tiktoken = "^0.5.2"
 chromadb = "0.4.22"
 langfuse = {version = "2.16.2", python = ">=3.11,<3.13"}
 unstructured = "0.12.5"
+rank-bm25 = "0.2.2"
 
 
 [tool.poetry.group.lint.dependencies]

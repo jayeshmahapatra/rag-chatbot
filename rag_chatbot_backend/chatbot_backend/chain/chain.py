@@ -9,7 +9,6 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import (
     ChatPromptTemplate,
-    MessagesPlaceholder,
     PromptTemplate,
 )
 from langchain_core.retrievers import BaseRetriever
@@ -22,7 +21,7 @@ from langchain_core.runnables import (
 from chatbot_backend.chain.prompts import RESPONSE_TEMPLATE, REPHRASE_TEMPLATE
 from chatbot_backend.chain.llms import mixtral_llm
 from chatbot_backend.schema import ChatRequest
-from chatbot_backend.chain.retrievers import get_chroma_retriever
+from chatbot_backend.chain.retrievers import get_chroma_retriever, get_chroma_bm25_ensemble_retriever
 
 import configparser
 
@@ -103,12 +102,8 @@ def create_chain(
         }
     ).with_config(run_name="RetrieveDocs")
 
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", RESPONSE_TEMPLATE),
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("human", "{question}"),
-        ]
+    prompt = ChatPromptTemplate.from_template(
+        RESPONSE_TEMPLATE
     )
 
     response_synthesizer = (prompt | llm | StrOutputParser()).with_config(
@@ -132,7 +127,9 @@ retriever = get_chroma_retriever(
     host = config.get('Chroma', 'host'),
     port = config.getint('Chroma', 'port'),
     collection_name = config.get('Chroma', 'collection_name'),
-    embedding_model_name = config.get('Embedding', 'model_name'))
+    embedding_model_name = config.get('Embedding', 'model_name'),
+    k = config.getint('Chroma', 'k')
+    )
 
 answer_chain = create_chain(
     mixtral_llm,

@@ -3,7 +3,8 @@ import argparse
 import os
 import re
 
-from langchain_community.document_loaders import UnstructuredURLLoader, WebBaseLoader, UnstructuredFileLoader
+#from langchain_community.document_loaders import UnstructuredURLLoader, WebBaseLoader, UnstructuredFileLoader
+from langchain_community.document_loaders import  WebBaseLoader, UnstructuredFileLoader, SitemapLoader
 from langchain.indexes import SQLRecordManager, index
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
@@ -11,9 +12,11 @@ import chromadb
 from chromadb.config import Settings as ChromaSettings
 from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
+from bs4 import  SoupStrainer
 
 from chatbot_backend.sitemap_crawler import get_urls_from_sitemap
 from chatbot_backend.chain.embedders import get_embeddings_model
+from chatbot_backend.utils.parser import jayesh_blog_extractor, metadata_extractor
 import configparser
 
 # Logging
@@ -21,17 +24,31 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def load_blog_docs(sitemap_url: str):
-	urls = get_urls_from_sitemap(sitemap_url)
-	loader = UnstructuredURLLoader(urls)
-	docs = loader.load()
+	return SitemapLoader(
+        sitemap_url,
+        # filter_urls=["https://python.langchain.com/"],
+        parsing_function=jayesh_blog_extractor,
+        default_parser="lxml",
+        bs_kwargs={
+            "parse_only": SoupStrainer(
+                name=("article", "title", "html", "lang", "content")
+            ),
+        },
+        meta_function=metadata_extractor,
+    ).load()
 
-	# Enrich the docs with metadata
-	for doc in docs:
-		# crawl source using webbase loader
-		source = WebBaseLoader(doc.metadata['source']).load()[0]
-		doc.metadata = source.metadata
+# def load_blog_docs(sitemap_url: str):
+# 	urls = get_urls_from_sitemap(sitemap_url)
+# 	loader = UnstructuredURLLoader(urls)
+# 	docs = loader.load()
 
-	return docs
+# 	# Enrich the docs with metadata
+# 	for doc in docs:
+# 		# crawl source using webbase loader
+# 		source = WebBaseLoader(doc.metadata['source']).load()[0]
+# 		doc.metadata = source.metadata
+
+# 	return docs
 
 def load_personal_docs(personal_docs_dir: str, private_data_url: str):
 
