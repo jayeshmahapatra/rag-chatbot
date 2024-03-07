@@ -16,7 +16,7 @@ from bs4 import  SoupStrainer
 
 from chatbot_backend.sitemap_crawler import get_urls_from_sitemap
 from chatbot_backend.chain.embedders import get_embeddings_model
-from chatbot_backend.utils.parser import jayesh_blog_extractor, metadata_extractor
+from chatbot_backend.utils.parser import langchain_docs_extractor, metadata_extractor
 import configparser
 
 # Logging
@@ -27,7 +27,7 @@ def load_blog_docs(sitemap_url: str):
 	return SitemapLoader(
         sitemap_url,
         # filter_urls=["https://python.langchain.com/"],
-        parsing_function=jayesh_blog_extractor,
+        parsing_function=langchain_docs_extractor,
         default_parser="lxml",
         bs_kwargs={
             "parse_only": SoupStrainer(

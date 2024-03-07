@@ -18,7 +18,7 @@ from langchain_core.runnables import (
     RunnableMap,
 )
 
-from chatbot_backend.chain.prompts import RESPONSE_TEMPLATE, REPHRASE_TEMPLATE
+from chatbot_backend.chain.prompts import RESPONSE_TEMPLATE, REPHRASE_TEMPLATE, RESPONSE_TEMPLATE_V2
 from chatbot_backend.chain.llms import mixtral_llm
 from chatbot_backend.schema import ChatRequest
 from chatbot_backend.chain.retrievers import get_chroma_retriever, get_chroma_bm25_ensemble_retriever
@@ -103,7 +103,7 @@ def create_chain(
     ).with_config(run_name="RetrieveDocs")
 
     prompt = ChatPromptTemplate.from_template(
-        RESPONSE_TEMPLATE
+        RESPONSE_TEMPLATE_V2
     )
 
     response_synthesizer = (prompt | llm | StrOutputParser()).with_config(
