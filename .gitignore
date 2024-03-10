@@ -161,7 +161,6 @@ cython_debug/
 
 *.env
 
-
 # Ignore everything inside Data folder except .gitkeep
 Data/**
 !Data/.gitkeep
@@ -173,6 +172,3 @@ Data/**
 
 !Data/chroma_data/
 !Data/chroma_data/.gitkeep
-
-# Don't ignore .env.local inside rag_chatbot_frontend (it only contains link to backend)
-!rag_chatbot_frontend/.env.local
