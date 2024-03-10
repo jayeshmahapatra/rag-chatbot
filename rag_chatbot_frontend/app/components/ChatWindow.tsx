@@ -226,45 +226,55 @@ export function ChatWindow(props: { conversationId: string }) {
           <EmptyState onChoice={sendInitialQuestion} />
         )}
       </div>
-      <InputGroup size="md" alignItems={"center"}>
-        <AutoResizeTextarea
-          value={input}
-          maxRows={5}
-          marginRight={"56px"}
-          placeholder="Tell me about Jayesh?"
-          textColor={"white"}
-          borderColor={"rgb(58, 58, 61)"}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              sendMessage();
-            } else if (e.key === "Enter" && e.shiftKey) {
-              e.preventDefault();
-              setInput(input + "\n");
-            }
-          }}
-        />
-        <InputRightElement h="full">
-          <IconButton
-            colorScheme="blue"
-            rounded={"full"}
-            aria-label="Send"
-            icon={isLoading ? <Spinner /> : <ArrowUpIcon />}
-            type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              sendMessage();
+      <Flex
+        direction={"column"}
+        alignItems={"center"}
+        marginTop={messages.length > 0 ? "" : "64px"}
+        width="100%"
+      >
+
+        <InputGroup size="md" alignItems={"center"}>
+          <AutoResizeTextarea
+            value={input}
+            maxRows={5}
+            marginRight={"56px"}
+            placeholder="Tell me about Jayesh?"
+            textColor={"white"}
+            borderColor={"rgb(58, 58, 61)"}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+              } else if (e.key === "Enter" && e.shiftKey) {
+                e.preventDefault();
+                setInput(input + "\n");
+              }
             }}
           />
-        </InputRightElement>
-      </InputGroup>
+          <InputRightElement h="full">
+            <IconButton
+              colorScheme="blue"
+              rounded={"full"}
+              aria-label="Send"
+              icon={isLoading ? <Spinner /> : <ArrowUpIcon />}
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                sendMessage();
+              }}
+            />
+          </InputRightElement>
+        </InputGroup>
 
-      {messages.length === 0 ? (
-        <Footer></Footer>
-      ) : (
-        <Footer></Footer>
-      )}
+        {messages.length === 0 ? (
+          <Footer></Footer>
+        ) : (
+          <Footer></Footer>
+        )}
+
+      </Flex>
+      
     </div>
   );
 }
