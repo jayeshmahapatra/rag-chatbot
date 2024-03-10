@@ -14,7 +14,7 @@ from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
 from bs4 import  SoupStrainer
 
-from chatbot_backend.sitemap_crawler import get_urls_from_sitemap
+from chatbot_backend.utils.sitemap_crawler import get_urls_from_sitemap
 from chatbot_backend.chain.embedders import get_embeddings_model
 from chatbot_backend.utils.parser import langchain_docs_extractor, metadata_extractor
 import configparser
