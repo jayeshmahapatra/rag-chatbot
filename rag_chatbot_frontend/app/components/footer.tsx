@@ -4,16 +4,19 @@ export const Footer: React.FC = () => {
     return (
         <footer className="flex flex-col items-center mt-4 w-full">
             <div className="flex items-center">
-                <a
+               
+            </div>
+            <div className="flex flex-row items-center justify-around w-full">
+
+                {/* <a
                     href="https://github.com/jayeshmahapatra/rag-chatbot"
                     target="_blank"
                     className="text-white flex items-center mr-4"
                 >
                     <img src="/images/github-mark.svg" className="h-4 mr-1" alt="GitHub Mark" />
-                    <span>View Source</span>
-                </a>
-            </div>
-            <div className="flex flex-row items-center justify-around w-full">
+                    <span>Source Code</span>
+                </a> */}
+
                 <a
                     href="https://jayeshmahapatra.github.io"
                     target="_blank"
