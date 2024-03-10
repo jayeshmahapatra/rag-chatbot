@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     networks:
       - caddy-vps
-  chroma:
+  rag-chroma:
     image: chromadb/chroma
     env_file:
       - chroma/chroma.env

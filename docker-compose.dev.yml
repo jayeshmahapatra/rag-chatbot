@@ -11,7 +11,7 @@ services:
     volumes:
       - $PWD/Data/backend_data:/Data
     restart: unless-stopped
-  chroma:
+  rag-chroma:
     image: chromadb/chroma
     env_file:
       - chroma/chroma.env
