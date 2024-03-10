@@ -13,11 +13,11 @@ export const Footer: React.FC = () => {
                     <span>View Source</span>
                 </a>
             </div>
-            <div className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-row items-center justify-around w-full">
                 <a
                     href="https://jayeshmahapatra.github.io"
                     target="_blank"
-                    className="text-white flex items-center mr-20 ml-20"
+                    className="text-white flex items-center"
                 >   
                     <img src="/images/notebook.svg" className="svg-icon mr-1" alt="Blog Mark" />
                     <span>Blog</span>
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
                 <a
                     href="https://www.linkedin.com/in/jayeshmahapatra"
                     target="_blank"
-                    className="text-white flex items-center mr-20 ml-20"
+                    className="text-white flex items-center"
                 >
                     <svg className='svg-icon mr-1'>
                         <use xlinkHref="/images/minima-social-icons.svg#linkedin"/>

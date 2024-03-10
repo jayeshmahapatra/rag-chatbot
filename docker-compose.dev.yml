@@ -20,10 +20,10 @@ services:
     volumes:
       - $PWD/Data/chroma_data:/chroma/chroma
     restart: unless-stopped
-  rag-frontend:
-    build:
-      context: ./rag_chatbot_frontend
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-    restart: unless-stopped
+  # rag-frontend:
+  #   build:
+  #     context: ./rag_chatbot_frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 3000:3000
+  #   restart: unless-stopped
