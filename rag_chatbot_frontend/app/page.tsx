@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 
 import { ChakraProvider } from "@chakra-ui/react";
 
+import { Footer } from "./components/footer";
+
 export default function Home() {
   return (
     <ChakraProvider>

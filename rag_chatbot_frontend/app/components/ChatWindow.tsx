@@ -26,6 +26,7 @@ import { ArrowUpIcon } from "@chakra-ui/icons";
 import { Select, Link } from "@chakra-ui/react";
 import { Source } from "./SourceBubble";
 import { apiBaseUrl } from "../utils/constants";
+import { Footer } from "./footer";
 
 
 
@@ -191,17 +192,17 @@ export function ChatWindow(props: { conversationId: string }) {
         </Heading>
         {messages.length > 0 ? (
           <Heading fontSize="md" fontWeight={"normal"} mb={1} color={"white"}>
-            Ask me anything about Jayesh and his blog posts!
+            Ask me anything about Jayesh and his <a href="https://jayeshmahapatra.github.io">blog</a> posts!
           </Heading>
         ) : (
           <Heading
             fontSize="xl"
             fontWeight={"normal"}
             color={"white"}
-            marginTop={"10px"}
+            marginTop={"5px"}
             textAlign={"center"}
           >
-            Ask me anything about Jayesh and his blog posts!
+            Ask me anything about Jayesh and his <a href="https://jayeshmahapatra.github.io">blog</a> posts!
           </Heading>
         )}
       </Flex>
@@ -260,18 +261,9 @@ export function ChatWindow(props: { conversationId: string }) {
       </InputGroup>
 
       {messages.length === 0 ? (
-        <footer className="flex justify-center absolute bottom-8">
-          <a
-            href="https://github.com/jayeshmahapatra/rag-chatbot"
-            target="_blank"
-            className="text-white flex items-center"
-          >
-            <img src="/images/github-mark.svg" className="h-4 mr-1" />
-            <span>View Source</span>
-          </a>
-        </footer>
+        <Footer></Footer>
       ) : (
-        ""
+        <Footer></Footer>
       )}
     </div>
   );
