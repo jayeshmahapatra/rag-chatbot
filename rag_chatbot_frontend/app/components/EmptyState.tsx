@@ -52,7 +52,7 @@ export function EmptyState(props: { onChoice: (question: string) => any }) {
               color={"gray.200"}
               textAlign={"center"}
             >
-              Why are embeddings used in Machine Learning?
+              Write a poem about Jayesh.
             </Heading>
           </CardHeader>
         </Card>
