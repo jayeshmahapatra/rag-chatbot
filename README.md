@@ -1,5 +1,5 @@
 # RAG-from-scratch
-This repo containes codebase for a Retrieval-Augmented Generation (RAG) based [chatbot](https://chat.jayeshdev.com) that I built for my [technical blog](https://jayeshmahapatra.github.io).
+This repo containes codebase for a Retrieval-Augmented Generation (RAG) based chatbot at [`https://chat.jayeshdev.com`](https://chat.jayeshdev.com) that I built for my [technical blog](https://jayeshmahapatra.github.io).
 
 <figure>
     <img src="./media/chatbot_example_gif.gif"
