@@ -3,6 +3,12 @@ This repo containes codebase for a Retrieval-Augmented Generation (RAG) based [c
 
 The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE).
 
+<figure>
+    <img src="./media/chatbot_example_gif.gif"
+         alt="A gif of using the chatbot to ask questions about my blog">
+    <figcaption>Asking the chatbot questions about my blog</figcaption>
+</figure>
+
 The application is built using the following technologies:
 
 1. **Backend**:
