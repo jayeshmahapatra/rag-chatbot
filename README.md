@@ -24,7 +24,7 @@ The application is built using the following technologies:
     - [Docker Compose](https://docs.docker.com/compose/) for orchestrating multi-container applications
 
 
-The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE). I made the following modifications to the original code:
+The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries [MIT License](./LICENSE). I made the following modifications to the original code:
 
 1. **Backend**:
     - Refactor to use self hosted Chroma Vector Database (with security) instead of Weaviate Cloud.
