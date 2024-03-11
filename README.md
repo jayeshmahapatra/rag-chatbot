@@ -1,5 +1,5 @@
 # RAG-from-scratch
-This repo containes codebase for a [Retrieval-Augmented Generation (RAG) chatbot](https://chat.jayeshdev.com) that I built for my [technical blog](https://jayeshmahapatra.github.io).
+This repo containes codebase for a Retrieval-Augmented Generation (RAG) based [chatbot](https://chat.jayeshdev.com) that I built for my [technical blog](https://jayeshmahapatra.github.io).
 
 The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE).
 
