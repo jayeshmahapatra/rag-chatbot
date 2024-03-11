@@ -1,13 +1,13 @@
 # RAG-from-scratch
 This repo containes codebase for a Retrieval-Augmented Generation (RAG) based [chatbot](https://chat.jayeshdev.com) that I built for my [technical blog](https://jayeshmahapatra.github.io).
 
-The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE).
-
 <figure>
     <img src="./media/chatbot_example_gif.gif"
          alt="A gif of using the chatbot to ask questions about my blog">
     <figcaption>Asking the chatbot questions about my blog</figcaption>
 </figure>
+
+## Codebase and Tech
 
 The application is built using the following technologies:
 
@@ -22,6 +22,23 @@ The application is built using the following technologies:
 3. **Deployment**:
     - [Docker](https://www.docker.com/) for containerization and multi stage builds
     - [Docker Compose](https://docs.docker.com/compose/) for orchestrating multi-container applications
+
+
+The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE). I made the following modifications to the original code:
+
+1. **Backend**:
+    - Refactor to use self hosted Chroma Vector Database (with security) instead of Weaviate Cloud.
+    - use [Together AI](https://www.together.ai/) for embedding and answer generation.
+    - Add support for parsing using Unstructured IO during ingestion.
+    - Refactor the chain code improving modularity and maintainability.
+    - Change prompting structure and replace RAG prompt with a more compact version.
+    - Add support for using Langfuse instead of Langsmith for monitoring.
+2. **Frontend**:
+    - Removed Langsmith integration
+    - Modified the example prompts and page contents
+    - Added footer element for links to my social
+3. **Deployment**:
+    - Added Dockerfiles with multi stage building for backend and frontend to keep deployment lightweight.
 
 ## Usage
 
