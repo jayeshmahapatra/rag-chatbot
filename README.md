@@ -3,6 +3,20 @@ This repo containes codebase for a Retrieval-Augmented Generation (RAG) based [c
 
 The codebase is built on top of the excellent [chat-langchain](https://github.com/langchain-ai/chat-langchain) repo by langchain, and carries the same [MIT License](./LICENSE).
 
+The application is built using the following technologies:
+
+1. **Backend**:
+    - [Langchain](https://www.langchain.com/) for Retrieval-Augmented Generation (RAG) logic
+    - [FastAPI](https://fastapi.tiangolo.com/) & [LangServe](https://www.langchain.com/langserve) for serving API endpoints
+    - [Langfuse](https://langfuse.com/) for monitoring and tracking
+    - [Chroma](https://www.trychroma.com/) as the Vector Database
+2. **Frontend**:
+    - [NextJS](https://nextjs.org/) & [Chakra UI](https://chakra-ui.com/) for the UI
+    - [LangchainJS](https://js.langchain.com/docs/get_started/introduction) for interacting with backend APIs
+3. **Deployment**:
+    - [Docker](https://www.docker.com/) for containerization and multi stage builds
+    - [Docker Compose](https://docs.docker.com/compose/) for orchestrating multi-container applications
+
 ## Usage
 
 #### 1. Clone the repository
