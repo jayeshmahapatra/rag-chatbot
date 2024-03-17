@@ -70,7 +70,7 @@ def load_personal_docs(personal_docs_dir: str, private_data_url: str):
 def ingest_docs(config: configparser.ConfigParser):
 	chunk_size = config.getint('Embedding', 'chunk_size')
 	chunk_overlap = config.getint('Embedding', 'chunk_overlap')
-	text_splitter = RecursiveCharacterTextSplitter(chunk_size= chunk_size, chunk_overlap=chunk_size//10)
+	text_splitter = RecursiveCharacterTextSplitter(chunk_size= chunk_size, chunk_overlap=chunk_overlap)
 	model_name = config.get('Embedding', 'model_name')
 	embedding = get_embeddings_model(model_name)
 
