@@ -30,8 +30,9 @@ The codebase is built on top of the excellent [chat-langchain](https://github.co
     - Refactor to use self hosted Chroma Vector Database (with security) instead of Weaviate Cloud.
     - use [Together AI](https://www.together.ai/) for embedding and answer generation.
     - Add support for parsing using Unstructured IO during ingestion.
-    - Refactor the chain code improving modularity and maintainability.
-    - Change prompting structure and replace RAG prompt with a more compact version.
+    - An improved chain that generates better standalone questions and incorporates summary of chat history.
+    - Recatoring to improve modularity and maintainability.
+    - Improved prompts with few-shot examples.
     - Add support for using Langfuse instead of Langsmith for monitoring.
 2. **Frontend**:
     - Removed Langsmith integration
