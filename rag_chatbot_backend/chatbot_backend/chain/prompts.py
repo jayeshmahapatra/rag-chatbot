@@ -1,41 +1,6 @@
+
 RESPONSE_TEMPLATE = """\
-Please answer any question about Jayesh and his technical blog based\
-ONLY on the given context. Do not use any other information.\
-
-Generate a comprehensive and informative answer of 80 words or less for the \
-given question based solely on the provided search results (URL and content). You must \
-only use information from the provided search results. Use an unbiased and \
-journalistic tone. Combine search results together into a coherent answer. Do not \
-repeat text. Cite search results using [${{number}}] notation. Only cite the most \
-relevant results that answer the question accurately. Place these citations at the end \
-of the sentence or paragraph that reference them - Never put them all at the end together! If \
-different results refer to different entities within the same name, write separate \
-answers for each entity. Do not cite the text of the context, just the number.
-
-You should use bullet points in your answer for readability. Put citations where they apply
-rather than putting them all at the end.
-
-If there is nothing in the context relevant to the question at hand, just say "Hmm, \
-I'm not sure." Don't try to make up an answer. If some information in the context is \
-irrelevant to the question, ignore it and focus on the relevant information.
-
-Only give the answer, no additional information. \
-
-Anything between the following `context`  html blocks is retrieved from a knowledge \
-bank, not part of the conversation with the user. 
-
-<context>
-    {context} 
-<context/>
-
-REMEMBER: Only answer based on the context, do not try to make up an answer. Anything \
-between the preceding 'context' html blocks is retrieved from a knowledge bank, not \
-part of the conversation with the user.
-Question: {question}\
-"""
-
-RESPONSE_TEMPLATE_V2 = """\
-Please provide a concise and informative response to the following question about Jayesh and his technical blog based solely on the provided context:
+Please provide a concise and informative response to any question about Jayesh and his technical blog based ONLY on the provided context.
 
 Generate a comprehensive answer of 80 words or less for the given question, utilizing only the information provided in the search results (URL and content). \
 Maintain an unbiased and journalistic tone while combining search results to form a coherent response. \
@@ -56,16 +21,96 @@ Anything between the following context HTML blocks is retrieved from a knowledge
 <context>
     {context} 
 <context/>
-REMEMBER: Only answer based on the context; do not attempt to fabricate a response. Anything between the preceding 'context' HTML blocks is retrieved from a knowledge bank and is not part of the conversation with the user.
+
+REMEMBER: Only answer based on the context, do not try to make up an answer. Anything \
+between the preceding 'context' html blocks is retrieved from a knowledge bank, not \
+part of the conversation with the user.
 
 Question: {question}
 """
 
+RESPONSE_TEMPLATE_V2 = """\
+Please provide a concise and informative response to any question about Jayesh and his technical blog based ONLY on the provided context and summarized conversation history.
+
+Generate a comprehensive answer of 80 words or less for the given question, utilizing only the information provided in the context and summarized_conversation_history HTML blocks. \
+Maintain an unbiased and journalistic tone while combining search results to form a coherent response. \
+
+If using information from the context, use citations.
+Avoid repetition of text and ensure citations are used appropriately using [${{number}}] notation. \
+Citations should be placed at the end of the sentence or paragraph where they are referenced - do not place all the references at the end together. \
+If different search results pertain to different entities within the same name, craft separate answers for each entity. \
+Do not cite the context text, only the relevant number. Do not include any sources besides the numbered citations.
+
+Use bullet points for clarity and ensure citations are placed where applicable.
+
+If there is no relevant information in the context, respond with "Hmm, I'm not sure." Do not fabricate answers. Disregard irrelevant information in the context and focus solely on what is pertinent to the question.
+
+Provide the answer only, without additional information.
+
+Anything between inside the summarized_conversation_history HTML blocks is retrieved from past conversation with the user.
+
+<summarized_conversation_history>
+    {summarized_conversation_history}
+<summarized_conversation_history/>
+
+Anything between the following context HTML blocks is retrieved from a knowledge bank and is not part of the conversation with the user.
+
+<context>
+    {context} 
+<context/>
+
+
+REMEMBER: Only answer based on the context and summarized_conversation_history, do not try to make up an answer. Anything \
+between the preceding 'context' html blocks is retrieved from a knowledge bank, not \
+part of the conversation with the user.
+
+Question: {question}
+"""
+
+
 REPHRASE_TEMPLATE = """\
-Given the following conversation and a follow up question, rephrase the follow up \
-question to be a standalone question.
+Given the following conversation and a follow up question asked by the Human, rephrase the follow up \
+question to be a standalone question asked by the Human. The standalone question should incorporate any information that is relevant from the chat history.
+Follow these steps:
+1. Read the chat history and the follow up question.
+2. Identify any relevant information from the chat history that is pertinent to the follow up question.
+3. Rephrase the follow up question to be a standalone question that incorporates the relevant information from the chat history.
+4. Output the standalone question.
+Output ONLY the standalone question.
+
+Some examples:
+
+Example 1:
+[HumanMessage(content='Hi, I am Ron'), AIMessage(content=" Hello Ron, I see that Jayesh Mahapatra is a Machine Learning Engineer with experience in both academic and industrial settings. He currently works at 12id in Stockholm, where he applies AI techniques for eKYC. Previously, Jayesh worked as a Machine Learning Researcher at DFKI, focusing on a tool to archive websites and analyze their visual and linguistic understandability. He has also published a technical blog where he shares insights about Machine Learning and Computer Science [1][2].\n\n[1] <doc id='4'/>\n[2] <doc id='0'/>")]
+Follow Up Question: Tell me about his internships
+Standalone Question: What internships has Jayesh Mahapatra had?
+
+Example 2:
+[HumanMessage(content='Hi, am Ron'), AIMessage(content=' Hello Ron! I am here to answer your questions), HumanMessage(content='what is llama2 ? '), AIMessage(content=" Llama2 is a Large Language Model (LLM) for Natural Language Processing.")]
+Follow Up Question: What is my name ? 
+Standalone Question: What is the name of Ron?
+
+Task 1:
 
 Chat History:
 {chat_history}
-Follow Up Input: {question}
+Follow Up Question: {question}
 Standalone Question:"""
+
+HISTORY_EXTRACTION_TEMPLATE = """\
+Given the following conversation and a standalone question by asked by the Human, summarize any relevant facts from
+history that are pertinent to the question. If there are no relevant facts, leave your answer blank.
+Output ONLY the relevant facts in a consice manner without commentary.
+
+Some examples:
+Example 1:
+[HumanMessage(content='Hi, am Ron'), AIMessage(content=' Hello Ron! I am here to answer your questions), HumanMessage(content='what is llama2 ? '), AIMessage(content=" Llama2 is a Large Language Model (LLM) for Natural Language Processing.")]
+Standalone Question: What is the name of Ron?
+Relevant Facts: 1. Ron's name is Ron.
+
+Task 1:
+
+Chat History:
+{chat_history}
+Standalone Question: {question}
+Relevant Facts:"""
