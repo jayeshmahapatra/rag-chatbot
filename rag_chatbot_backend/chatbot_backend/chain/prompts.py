@@ -108,23 +108,23 @@ Follow these steps:
 4. If there are relevant messages, list them.
 5. Don't do any inference or make any assumptions. Only list messages that are there in the chat history.
 6. Verify each of the listed message as being relevant and remove irrelevant messages.
-7. Output the relevant messages.
+7. Output the relevant messages without commentary.
 
 
 Some examples:
 Example 1:
 [HumanMessage(content='Hi, am Ron'), AIMessage(content=' Hello Ron! I am here to answer your questions), HumanMessage(content='what is llama2 ? '), AIMessage(content=" Llama2 is a Large Language Model (LLM) for Natural Language Processing.")]
 Standalone Question: What is the name of Ron?
-Relevant Facts: 1. HumanMessage(content='Hi, am Ron')
+Relevant Messages: 1. HumanMessage(content='Hi, am Ron')
 
 Example 2:
 [HumanMessage(content='Hi, does David have C++ experience ? also tell me about the institutions David has been associated with ? '), AIMessage(content=' Hi, David has 3 years of C++ experience. He has been associated with Ericsson, Bosch and Siemens.')]
 Standalone Question: Where did David gain his C++ experience?
-Relevant Facts: 1. David has C++ experience. 2. David has been associated with Ericsson, Bosch and Siemens.
+Relevant Messages: 1. AIMessage(content=' Hi, David has 3 years of C++ experience. He has been associated with Ericsson, Bosch and Siemens.')
 
 Task 1:
 
 Chat History:
 {chat_history}
 Standalone Question: {question}
-Relevant Facts:"""
+Relevant Messages:"""
