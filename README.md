@@ -7,6 +7,7 @@ This repo containes codebase for a Retrieval-Augmented Generation (RAG) based ch
     <figcaption>Asking the chatbot questions about my blog</figcaption>
 </figure>
 
+This repo also has a companion blog post [`Chat with my blog: A RAG based chatbot that talks about me and my blog !`](https://jayeshmahapatra.github.io/2024/03/18/rag-chatbot.html)
 ## Codebase and Tech
 
 The application is built using the following technologies:
