@@ -98,15 +98,29 @@ Follow Up Question: {question}
 Standalone Question:"""
 
 HISTORY_EXTRACTION_TEMPLATE = """\
-Given the following conversation and a standalone question by asked by the Human, summarize any relevant facts from
-history that are pertinent to the question. If there are no relevant facts, leave your answer blank.
-Output ONLY the relevant facts in a consice manner without commentary.
+Given the following conversation and a standalone question by asked by the Human, list any relevant messages from
+history that are pertinent to the question. If there are no relevant messages, leave your answer blank.
+Output only the relevant chat messages wihtout making any assumptions.
+Follow these steps:
+1. Read the chat history and the follow up question.
+2. Identify any relevant messages from the chat history that is pertinent to the follow up question.
+3. If there aren't any relevant messages, leave your answer blank.
+4. If there are relevant messages, list them.
+5. Don't do any inference or make any assumptions. Only list messages that are there in the chat history.
+6. Verify each of the listed message as being relevant and remove irrelevant messages.
+7. Output the relevant messages.
+
 
 Some examples:
 Example 1:
 [HumanMessage(content='Hi, am Ron'), AIMessage(content=' Hello Ron! I am here to answer your questions), HumanMessage(content='what is llama2 ? '), AIMessage(content=" Llama2 is a Large Language Model (LLM) for Natural Language Processing.")]
 Standalone Question: What is the name of Ron?
-Relevant Facts: 1. Ron's name is Ron.
+Relevant Facts: 1. HumanMessage(content='Hi, am Ron')
+
+Example 2:
+[HumanMessage(content='Hi, does David have C++ experience ? also tell me about the institutions David has been associated with ? '), AIMessage(content=' Hi, David has 3 years of C++ experience. He has been associated with Ericsson, Bosch and Siemens.')]
+Standalone Question: Where did David gain his C++ experience?
+Relevant Facts: 1. David has C++ experience. 2. David has been associated with Ericsson, Bosch and Siemens.
 
 Task 1:
 
