@@ -32,7 +32,7 @@ The codebase is built on top of the excellent [chat-langchain](https://github.co
     - Add support for parsing using Unstructured IO during ingestion.
     - An **improved chain** that generates better standalone questions and incorporates summary of chat history.
     - Refactoring to improve modularity and maintainability.
-    - **Improved prompts** with few-shot examples.
+    - **Improved prompts** with step-by-step instructions and few-shot examples.
     - Add support for using Open Source **Langfuse** instead of Langsmith for monitoring.
 2. **Frontend**:
     - Removed Langsmith integration
