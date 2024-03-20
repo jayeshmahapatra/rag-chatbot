@@ -12,7 +12,7 @@ langchain-community = "^0.0.19"
 langchain-openai = "^0.0.3"
 langchain-together = "0.0.2.post1"
 langserve = {extras = ["server"], version = "^0.0.39"}
-fastapi = "^0.103.1"
+fastapi = "^0.109.1"
 pydantic = "2.5.0"
 uvicorn = "^0.23.2"
 beautifulsoup4 = "^4.12.2"

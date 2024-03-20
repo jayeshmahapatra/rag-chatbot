@@ -126,25 +126,26 @@ files = [
 
 [[package]]
 name = "anyio"
-version = "3.7.1"
+version = "4.3.0"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "anyio-3.7.1-py3-none-any.whl", hash = "sha256:91dee416e570e92c64041bd18b900d1d6fa78dff7048769ce5ac5ddad004fbb5"},
-    {file = "anyio-3.7.1.tar.gz", hash = "sha256:44a3c9aba0f5defa43261a8b3efb97891f2bd7d804e0e1f56419befa1adfc780"},
+    {file = "anyio-4.3.0-py3-none-any.whl", hash = "sha256:048e05d0f6caeed70d731f3db756d35dcc1f35747c8c403364a8332c630441b8"},
+    {file = "anyio-4.3.0.tar.gz", hash = "sha256:f75253795a87df48568485fd18cdd2a3fa5c4f7c5be8e5e36637733fce06fed6"},
 ]
 
 [package.dependencies]
-exceptiongroup = {version = "*", markers = "python_version < \"3.11\""}
+exceptiongroup = {version = ">=1.0.2", markers = "python_version < \"3.11\""}
 idna = ">=2.8"
 sniffio = ">=1.1"
+typing-extensions = {version = ">=4.1", markers = "python_version < \"3.11\""}
 
 [package.extras]
-doc = ["Sphinx", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme (>=1.2.2)", "sphinxcontrib-jquery"]
-test = ["anyio[trio]", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=4)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
-trio = ["trio (<0.22)"]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (>=0.23)"]
 
 [[package]]
 name = "asgiref"
@@ -665,24 +666,23 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "fastapi"
-version = "0.103.2"
+version = "0.109.2"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "fastapi-0.103.2-py3-none-any.whl", hash = "sha256:3270de872f0fe9ec809d4bd3d4d890c6d5cc7b9611d721d6438f9dacc8c4ef2e"},
-    {file = "fastapi-0.103.2.tar.gz", hash = "sha256:75a11f6bfb8fc4d2bec0bd710c2d5f2829659c0e8c0afd5560fdda6ce25ec653"},
+    {file = "fastapi-0.109.2-py3-none-any.whl", hash = "sha256:2c9bab24667293b501cad8dd388c05240c850b58ec5876ee3283c47d6e1e3a4d"},
+    {file = "fastapi-0.109.2.tar.gz", hash = "sha256:f3817eac96fe4f65a2ebb4baa000f394e55f5fccdaf7f75250804bc58f354f73"},
 ]
 
 [package.dependencies]
-anyio = ">=3.7.1,<4.0.0"
 pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0"
-starlette = ">=0.27.0,<0.28.0"
-typing-extensions = ">=4.5.0"
+starlette = ">=0.36.3,<0.37.0"
+typing-extensions = ">=4.8.0"
 
 [package.extras]
-all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.5)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
+all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.7)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
 
 [[package]]
 name = "filelock"
@@ -814,14 +814,14 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2024.3.0"
+version = "2024.3.1"
 description = "File-system specification"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fsspec-2024.3.0-py3-none-any.whl", hash = "sha256:779001bd0122c9c4975cf03827d5e86c3afb914a3ae27040f15d341ab506a693"},
-    {file = "fsspec-2024.3.0.tar.gz", hash = "sha256:f13a130c0ed07e15c4e1aeb0472a823e9c426b0b5792a1f40d902b0a71972d43"},
+    {file = "fsspec-2024.3.1-py3-none-any.whl", hash = "sha256:918d18d41bf73f0e2b261824baeb1b124bcf771767e3a26425cd7dec3332f512"},
+    {file = "fsspec-2024.3.1.tar.gz", hash = "sha256:f39780e282d7d117ffb42bb96992f8a90795e4d0fb0f661a70ca39fe9c43ded9"},
 ]
 
 [package.extras]
@@ -1220,14 +1220,14 @@ testing = ["flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pyfakefs
 
 [[package]]
 name = "importlib-resources"
-version = "6.3.1"
+version = "6.3.2"
 description = "Read resources from Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "importlib_resources-6.3.1-py3-none-any.whl", hash = "sha256:4811639ca7fa830abdb8e9ca0a104dc6ad13de691d9fe0d3173a71304f068159"},
-    {file = "importlib_resources-6.3.1.tar.gz", hash = "sha256:29a3d16556e330c3c8fb8202118c5ff41241cc34cbfb25989bbad226d99b7995"},
+    {file = "importlib_resources-6.3.2-py3-none-any.whl", hash = "sha256:f41f4098b16cd140a97d256137cfd943d958219007990b2afb00439fc623f580"},
+    {file = "importlib_resources-6.3.2.tar.gz", hash = "sha256:963eb79649252b0160c1afcfe5a1d3fe3ad66edd0a8b114beacffb70c0674223"},
 ]
 
 [package.extras]
@@ -2036,14 +2036,14 @@ sympy = "*"
 
 [[package]]
 name = "openai"
-version = "1.14.1"
+version = "1.14.2"
 description = "The official Python library for the openai API"
 category = "main"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.14.1-py3-none-any.whl", hash = "sha256:f9322b0bf3b82bbd06930fad535369a023f35a3a96d3ef0b827644a15d7aae97"},
-    {file = "openai-1.14.1.tar.gz", hash = "sha256:1fab5dd623cdc0c7c6e7da5d8d11fa6900f94191c2dfb6510d7eac33195fa175"},
+    {file = "openai-1.14.2-py3-none-any.whl", hash = "sha256:a48b3c4d635b603952189ac5a0c0c9b06c025b80eb2900396939f02bb2104ac3"},
+    {file = "openai-1.14.2.tar.gz", hash = "sha256:e5642f7c02cf21994b08477d7bb2c1e46d8f335d72c26f0396c5f89b15b5b153"},
 ]
 
 [package.dependencies]
@@ -3408,21 +3408,21 @@ files = [
 
 [[package]]
 name = "starlette"
-version = "0.27.0"
+version = "0.36.3"
 description = "The little ASGI library that shines."
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "starlette-0.27.0-py3-none-any.whl", hash = "sha256:918416370e846586541235ccd38a474c08b80443ed31c578a418e2209b3eef91"},
-    {file = "starlette-0.27.0.tar.gz", hash = "sha256:6a6b0d042acb8d469a01eba54e9cda6cbd24ac602c4cd016723117d6a7e73b75"},
+    {file = "starlette-0.36.3-py3-none-any.whl", hash = "sha256:13d429aa93a61dc40bf503e8c801db1f1bca3dc706b10ef2434a36123568f044"},
+    {file = "starlette-0.36.3.tar.gz", hash = "sha256:90a671733cfb35771d8cc605e0b679d23b992f8dcfad48cc60b38cb29aeb7080"},
 ]
 
 [package.dependencies]
 anyio = ">=3.4.0,<5"
 
 [package.extras]
-full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyaml"]
+full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
 
 [[package]]
 name = "sympy"
@@ -4354,4 +4354,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "f25d61a11cf4721f31b07d125f3d85d8f2239534a45f9f1a8cd6fe8ea9769129"
+content-hash = "27c1c544e1cc136ee06a78cf57415bc6570f7da213587ef90c435247e8690d23"
