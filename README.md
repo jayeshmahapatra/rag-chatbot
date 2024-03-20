@@ -29,7 +29,7 @@ The codebase is built on top of the excellent [chat-langchain](https://github.co
 
 1. **Backend**:
     - Refactor to use self hosted **Chroma Vector Database** (with security) instead of Weaviate Cloud.
-    - Use [Together AI](https://www.together.ai/) for embedding and answer generation.
+    - use [Together AI](https://www.together.ai/) for embedding ([msmarco-bert-base-dot-v5](https://huggingface.co/sentence-transformers/msmarco-bert-base-dot-v5)) and answer generation ([Mixtral-Instruct-v0.1](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1)).
     - Add support for parsing using Unstructured IO during ingestion.
     - An **improved chain** that generates better standalone questions and incorporates summary of chat history.
     - Refactoring to improve modularity and maintainability.
