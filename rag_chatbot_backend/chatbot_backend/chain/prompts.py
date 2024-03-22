@@ -31,6 +31,7 @@ Question: {question}
 
 RESPONSE_TEMPLATE_V2 = """\
 Please provide a concise and informative response to any question about Jayesh and his technical blog based ONLY on the provided context and summarized conversation history.
+Make sure your answer is complete and doesn't stop midway.
 
 Generate a comprehensive answer of 80 words or less for the given question, utilizing only the information provided in the context and summarized_conversation_history HTML blocks. \
 Maintain an unbiased and journalistic tone while combining search results to form a coherent response. \
